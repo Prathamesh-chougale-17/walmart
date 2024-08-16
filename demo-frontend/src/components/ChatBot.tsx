@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Mic, Volume, Send } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
@@ -12,9 +12,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { useLangStore } from "@/stores/langStore";
-import { useProductStore } from "@/stores/productStore";
 import { useToast } from "./ui/use-toast";
+import { useStore } from "@/contexts/StoreContext";
 
 interface Message {
   text: string;
@@ -24,6 +23,14 @@ interface Message {
 
 interface ChatFormData {
   message: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  relevance: number;
 }
 
 const languages = [
@@ -38,10 +45,17 @@ export default function ChatBot() {
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const { register, handleSubmit, reset } = useForm<ChatFormData>();
-  const { language, setLanguage } = useLangStore();
-  const { products, updateProductRelevance } = useProductStore();
+  // const [products, setProducts] = useState<Product[]>([]);
+  const {
+    language,
+    setLanguage,
+    updateProductRelevance,
+    products,
+    setProducts,
+  } = useStore();
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const [recommendations, setRecommendations] = useState([]);
 
   const recognition = useRef<SpeechRecognition | null>(null);
   const synthesis =
@@ -133,7 +147,11 @@ export default function ChatBot() {
           ]);
         });
 
+        // setRecommendations(data.recommendations);
+
         updateProductRelevance(data.recommendations.map((rec: any) => rec.id));
+
+        setProducts([...products, ...data.recommendations]);
       }
 
       if (data.inventoryInfo) {

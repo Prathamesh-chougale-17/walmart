@@ -1,12 +1,12 @@
 "use client";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
+import { useStore } from "@/contexts/StoreContext";
 import Link from "next/link";
-import { useProductStore } from "@/stores/productStore";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { products } = useProductStore();
+  const { products } = useStore();
   useEffect(() => {
     console.log(products);
   }, [products]);

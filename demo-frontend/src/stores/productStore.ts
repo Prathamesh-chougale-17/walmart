@@ -1,5 +1,5 @@
 import {create} from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, PersistOptions } from 'zustand/middleware'
 
 interface Product {
   id: string
@@ -32,6 +32,19 @@ export const useProductStore = create(
     }),
     {
       name: 'product-store',
-    }
+      storage: typeof window !== 'undefined'
+        ? {
+            getItem: (name: string) => {
+              return localStorage.getItem(name);
+            },
+            setItem: (name: string, value: string) => {
+              localStorage.setItem(name, value);
+            },
+            removeItem: (name: string) => {
+              localStorage.removeItem(name);
+            },
+          }
+        : undefined, // TypeScript needs to know that storage can be undefined
+    } as PersistOptions<ProductState>
   )
 )
