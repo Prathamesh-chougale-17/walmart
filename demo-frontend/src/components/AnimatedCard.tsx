@@ -18,7 +18,7 @@ export default function AnimatedCard({ product }: { product: Product }) {
       <Card className="overflow-hidden">
         <CardContent className="p-4">
           <Image
-            src={"/product.jpg"}
+            src={"/noimage.jpg"}
             alt={product.name}
             width={300}
             height={200}

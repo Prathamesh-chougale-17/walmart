@@ -25,9 +25,9 @@ export default function RecommendationCarousel() {
     // Implement API call to get recommendations
     // For now, we'll use dummy data
     const dummyProducts: Product[] = [
-      { id: "1", name: "Product 1", image: "/product.jpg", price: 19.99 },
-      { id: "2", name: "Product 2", image: "/product.jpg", price: 29.99 },
-      { id: "3", name: "Product 3", image: "/product.jpg", price: 39.99 },
+      { id: "1", name: "Product 1", image: "/noimage.jpg", price: 19.99 },
+      { id: "2", name: "Product 2", image: "/noimage.jpg", price: 29.99 },
+      { id: "3", name: "Product 3", image: "/noimage.jpg", price: 39.99 },
       // Add more dummy products...
     ];
     setProducts(dummyProducts);

@@ -32,7 +32,7 @@ export default function CategoryGrid() {
             className="relative overflow-hidden rounded-lg shadow-md group"
           >
             <Image
-              src={"/product.jpg"}
+              src={"/noimage.jpg"}
               alt={category.name}
               width={200}
               height={200}
