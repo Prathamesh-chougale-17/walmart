@@ -1,11 +1,17 @@
+"use client";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useProductStore } from "@/stores/productStore";
+import { useEffect } from "react";
 
 export default function Home() {
   const { products } = useProductStore();
+  useEffect(() => {
+    console.log(products);
+  }, [products]);
 
+  console.log(products);
   // Sort products by relevance
   const sortedProducts = [...products].sort(
     (a, b) => b.relevance - a.relevance
