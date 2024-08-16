@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/Header";
 import ChatBot from "@/components/ChatBot";
 import { StoreProvider } from "../contexts/StoreContext";
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({
             <Header />
             <main className="container mx-auto py-8 px-4">{children}</main>
             <ChatBot />
+            <Toaster />
           </StoreProvider>
         </ThemeProvider>
       </body>
