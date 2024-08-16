@@ -20,7 +20,6 @@ export async function POST(request: Request) {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text().replace(/```json\n/g, "").replace(/\n```/g, "");
-    console.log("Chat response:", text);
 
     const secondPrompt = `
     Generate product recommendations from text ${text}. Consider current inventory levels and market trends. Provide 5 more recommendations in JSON format with product "id", "name", "price" and "image".
@@ -38,7 +37,6 @@ export async function POST(request: Request) {
     price: product.price,
     relevance: 1, // Initial relevance, can be adjusted as needed
   }));
-  console.log("Formatted suggestions:", formattedSuggestions);
   return NextResponse.json({ message: text,recommendations: formattedSuggestions });
   } catch (error) {
     console.error("Chat error:", error);
