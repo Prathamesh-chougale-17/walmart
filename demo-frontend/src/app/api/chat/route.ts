@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `
-      You are a helpful shopping assistant for WalmartClone. 
+      You are a helpful shopping assistant for WalmartAi. 
       Answer the following customer query: "${message}".
       Provide helpful, concise information about products, pricing, or shopping advice.
       Suggest relevant products from the following list or recommend your own products based on the query Keep the response under 100 words.
