@@ -15,6 +15,7 @@ import {
 import { useLangStore } from "@/stores/langStore";
 import { useProductStore } from "@/stores/productStore";
 import { useToast } from "./ui/use-toast";
+
 interface Message {
   text: string;
   sender: "user" | "bot";
@@ -43,7 +44,8 @@ export default function ChatBot() {
   const { toast } = useToast();
 
   const recognition = useRef<SpeechRecognition | null>(null);
-  const synthesis = window.speechSynthesis;
+  const synthesis =
+    typeof window !== "undefined" ? window.speechSynthesis : null;
 
   useEffect(() => {
     if (typeof window !== "undefined" && "webkitSpeechRecognition" in window) {
@@ -76,14 +78,16 @@ export default function ChatBot() {
   };
 
   const speakMessage = (text: string) => {
-    if (isSpeaking) {
-      synthesis.cancel();
+    if (synthesis) {
+      if (isSpeaking) {
+        synthesis.cancel();
+      }
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = language;
+      synthesis.speak(utterance);
+      setIsSpeaking(true);
+      utterance.onend = () => setIsSpeaking(false);
     }
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = language;
-    synthesis.speak(utterance);
-    setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
   };
 
   const handleSend = async (message: string) => {
